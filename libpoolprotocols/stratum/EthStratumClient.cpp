@@ -1598,9 +1598,8 @@ void EthStratumClient::processResponse(Json::Value& responseObject)
         }
         else if (_method == "client.reconnect")
         {
-             cwarn << "Received client.reconnect, disconnecting ...";
-             m_io_service.post(
-             m_io_strand.wrap(boost::bind(&EthStratumClient::disconnect, this)))
+            cnote << m_conn->Host() << " requested connection reconnect. Disconnecting ...";
+            m_io_service.post(m_io_strand.wrap(boost::bind(&EthStratumClient::disconnect, this)));
         }
         else
         {
