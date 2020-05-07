@@ -1596,6 +1596,12 @@ void EthStratumClient::processResponse(Json::Value& responseObject)
 
             send(jReq);
         }
+        else if (_method == "client.reconnect")
+        {
+             cwarn << "Received client.reconnect, disconnecting ...";
+             m_io_service.post(
+             m_io_strand.wrap(boost::bind(&EthStratumClient::disconnect, this)))
+        }
         else
         {
             cwarn << "Got unknown method [" << _method << "] from pool. Discarding...";
